@@ -1,0 +1,23 @@
+---
+users:
+  - name: Alex
+    gr: admins, docker
+    path: "/home/Alex/.ssh/authorized_keys"
+  - name: Bob
+    gr: administrator2
+    path: "/home/Bob/.ssh/authorized_keys"
+  - name: John
+    gr: ops
+    path: "/home/John/.ssh/authorized_keys"
+  - name: Cristi
+    gr: admins
+    path: "/home/Cristi/.ssh/authorized_keys"
+ 
+
+priv_groups:
+  - admins
+  - administrator2
+
+regular_groups:
+  - docker
+  - ops

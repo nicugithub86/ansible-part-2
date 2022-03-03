@@ -1,0 +1,11 @@
+---
+users:
+  - name: nicuadmin
+    gr: wheel
+    path: "/home/nicuadmin/.ssh/authorized_keys"
+  - name: apacheuser
+    gr: regular_gr 
+    path: "/home/apacheuser/.ssh/authorized_keys"
+ 
+regular_groups:
+  - regular_gr 

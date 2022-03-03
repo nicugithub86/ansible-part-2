@@ -1,0 +1,60 @@
+---
+- hosts: main
+  become: true
+  tasks:
+    - name: enable EPEL Release
+      yum:
+        name: epel-release
+        state: latest
+
+    - name: install nginx server
+      yum:
+        name: nginx
+        state: latest
+
+    - name: open port 80
+      shell:
+        cmd: iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+
+    - name: copy nginx conf file to the main nginx load balancer
+      copy:
+        src: /home/ansible/nginx.conf
+        dest: /etc/nginx/nginx.conf
+
+    - name: restart and enable nginx
+      service:
+        name: nginx
+        state: restarted
+        enabled: yes
+
+- hosts: servers
+  become: true
+  tasks:
+    - name: install
+      yum:
+        name: httpd
+        state: latest
+
+    - name: open port 80
+      shell:
+        cmd: iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+   
+    - name: copy index.html on the webservers
+      copy:
+        src: /home/ansible/index.html
+        dest: /var/www/html/    
+
+    - name: overwrite index file with the hostname
+      shell:
+        cmd: hostname >> /var/www/html/index.html
+    
+    - name: restart and enable httpd server
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
+
+
+
+
+
